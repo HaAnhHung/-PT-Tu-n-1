@@ -19,6 +19,11 @@ def infoMeasure(n, p, N):
 
 
 def sumProb(p, N):
+    '''
+    sumProb(15, 0.5) = 0.999969482421875
+    sumProb(30, 0.5) = 0.9999999990686774
+    => Hàm sumProb có thể sử dụng để kiểm chứng tổng xác suất của phân bố binamial = 1 
+    '''
     sum: float = 0
     for x in range(1, N + 1):
         sum += prob(x, p, N)
