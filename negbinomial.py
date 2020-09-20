@@ -2,6 +2,14 @@ import math
 from functools import reduce
 import operator as op
 
+
+def factorial(x):
+    res = 1
+    for i in range(1, x + 1):
+        res *= i
+    return res
+
+
 def ncr(n, r):
     r = min(r, n - r)
     number: float = reduce(op.mul, range(n, n - r, -1), 1)
@@ -15,30 +23,30 @@ def prob(n, p, N):
 
 def infoMeasure(n, p, N):
     px = prob(n, p, N)
-    return -math.log2(px)
+    return 0-math.log2(px)
 
 
-def sumProb(N, p):
+def sumProb(N, p, r):
     '''
-    sumProb(15, 0.5) = 0.999969482421875
-    sumProb(30, 0.5) = 0.9999999990686774
-    => Hàm sumProb có thể sử dụng để kiểm chứng tổng xác suất của phân bố binamial = 1 
+    sumProb(5, 0.5, 1) = 0.96875
+    sumProb(5, 0.5, 2) = 0.8125
     '''
     sum: float = 0
-    for i in range(1, N + 1):
-        sum += prob(N, p, i)
+    for i in range(r, N + 1):
+        sum += prob(r, p, i)
     return sum
 
 
-def approxEntropy(N, p):
+def approxEntropy(N, p, r):
     '''
-        Ham approxEntropy tinh xap xi entropy cua nguon tin negbinomial, duoc tinh bang tong cua cac xac suat nhan voi luong thong
-        tin tuong ung.
-        approxEntropy(2, 0.5) = 1
-        approxEntropy(5, 0.5) = 1.78125
-        approxEntropy(100, 0.5) = 1.9999999999999998
+    Ham approxEntropy tinh xap xi entropy cua nguon tin negative binomial, duoc tinh bang tong cua cac xac suat nhan voi luong thong
+    tin tuong ung.
+    approxEntropy(5, 0.5, 1) = 1.78125
+    approxEntropy(5, 0.5, 2) = 1.8278195311147831
+    approxEntropy(5, 0.5, 3) = 1.2806390622295665
+    approxEntropy(5, 0.5, 4) = 0.625
     '''
     sum = 0
-    for i in range(1, N + 1):
-        sum += infoMeasure(N, p, i) * prob(N, p, i)
+    for i in range(r, N+1):
+        sum += infoMeasure(r, p, i) * prob(r, p, i)
     return sum
